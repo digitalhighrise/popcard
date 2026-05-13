@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in — Popcard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="/" class="brand">
+        <div class="brand-logo" aria-label="Popcard logo">
+          <svg viewBox="0 0 56 56" width="44" height="44">
+            <g>
+              <rect x="3" y="6" width="14" height="44" rx="6" fill="#FF3DA0" transform="rotate(-12 10 28)"/>
+              <rect x="6" y="6" width="14" height="44" rx="6" fill="#FF8A3D" transform="rotate(-7 13 28)"/>
+              <rect x="9" y="6" width="14" height="44" rx="6" fill="#FFD338" transform="rotate(-2 16 28)"/>
+              <rect x="12" y="6" width="14" height="44" rx="6" fill="#2BC489" transform="rotate(3 19 28)"/>
+              <rect x="15" y="6" width="14" height="44" rx="6" fill="#3DAEFF" transform="rotate(8 22 28)"/>
+            </g>
+            <path d="M14 6 H40 A8 8 0 0 1 48 14 V38 A8 8 0 0 1 40 46 H28 L18 54 L20 46 A6 6 0 0 1 14 40 V6 Z" fill="#6E3DEA"/>
+            <circle cx="22" cy="22" r="2.4" fill="#fff"/>
+            <circle cx="34" cy="22" r="2.4" fill="#fff"/>
+            <path d="M22 30 Q28 36 34 30" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">popcard<sup>&reg;</sup></span>
+      </a>
+      <nav class="nav">
+        <a href="/#how">How it works</a>
+        <a href="/examples">Examples</a>
+        <a href="/pricing">Pricing</a>
+      </nav>
+    </header>
+
+    <main class="auth-card">
+      <h1 class="auth-h1">Welcome to <span class="accent">Popcard</span>.</h1>
+      <p class="auth-sub">Sign in with Google to start popping cards. No password to remember.</p>
+
+      <div id="g_id_onload"
+           data-client_id="61959955783-pjfsl2pf4r3l38qdh864b5kod2nr7f60.apps.googleusercontent.com"
+           data-callback="onGoogleCredential"
+           data-auto_prompt="false"
+           data-context="signin"
+           data-ux_mode="popup"></div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="pill"
+           data-theme="outline"
+           data-text="continue_with"
+           data-size="large"
+           data-logo_alignment="left"></div>
+
+      <p class="auth-fine">By continuing you agree to our <a href="#">Terms</a> and <a href="#">Privacy</a>. We use a small essential cookie to keep you signed in.</p>
+
+      <div id="auth-error" class="auth-error" hidden></div>
+    </main>
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    function onGoogleCredential(response) {
+      const errEl = document.getElementById('auth-error');
+      errEl.hidden = true;
+      window.PopcardAuth.signInWithGoogle(response.credential).then((data) => {
+        if (data && data.user) {
+          window.PopcardAnalytics?.track('Sign In', { method: 'google' });
+          const params = new URLSearchParams(window.location.search);
+          window.location.href = params.get('next') || '/account';
+        } else {
+          errEl.textContent = (data && data.error) || 'Sign-in failed. Please try again.';
+          errEl.hidden = false;
+        }
+      }).catch(() => {
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.hidden = false;
+      });
+    }
+  </script>
+</body>
+</html>

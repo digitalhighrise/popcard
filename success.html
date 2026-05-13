@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome — Popcard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="/" class="brand">
+        <div class="brand-logo" aria-label="Popcard logo">
+          <svg viewBox="0 0 56 56" width="44" height="44">
+            <g>
+              <rect x="3" y="6" width="14" height="44" rx="6" fill="#FF3DA0" transform="rotate(-12 10 28)"/>
+              <rect x="6" y="6" width="14" height="44" rx="6" fill="#FF8A3D" transform="rotate(-7 13 28)"/>
+              <rect x="9" y="6" width="14" height="44" rx="6" fill="#FFD338" transform="rotate(-2 16 28)"/>
+              <rect x="12" y="6" width="14" height="44" rx="6" fill="#2BC489" transform="rotate(3 19 28)"/>
+              <rect x="15" y="6" width="14" height="44" rx="6" fill="#3DAEFF" transform="rotate(8 22 28)"/>
+            </g>
+            <path d="M14 6 H40 A8 8 0 0 1 48 14 V38 A8 8 0 0 1 40 46 H28 L18 54 L20 46 A6 6 0 0 1 14 40 V6 Z" fill="#6E3DEA"/>
+            <circle cx="22" cy="22" r="2.4" fill="#fff"/>
+            <circle cx="34" cy="22" r="2.4" fill="#fff"/>
+            <path d="M22 30 Q28 36 34 30" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">popcard<sup>&reg;</sup></span>
+      </a>
+    </header>
+
+    <main class="success">
+      <div class="success-burst">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.3L19 9l-5.3 1.7L12 16l-1.7-5.3L5 9l5.3-1.7zM19 14l.9 2.6L22 18l-2.1.4L19 21l-.9-2.6L16 18l2.1-.4z"/></svg>
+      </div>
+      <h1 class="success-h1">You're in.</h1>
+      <p class="success-sub">Your subscription is live and your account is ready. Time to pop some cards.</p>
+      <div class="success-cta-row">
+        <a class="tier-cta" href="/">Start popping</a>
+        <a class="tier-cta" href="/account" style="background: var(--ink)">View account</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    window.PopcardAnalytics?.track('Checkout Success');
+  </script>
+</body>
+</html>

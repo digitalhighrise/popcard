@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pricing — Popcard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="index.html" class="brand">
+        <div class="brand-logo" aria-label="Popcard logo">
+          <svg viewBox="0 0 56 56" width="44" height="44">
+            <g>
+              <rect x="3" y="6" width="14" height="44" rx="6" fill="#FF3DA0" transform="rotate(-12 10 28)"/>
+              <rect x="6" y="6" width="14" height="44" rx="6" fill="#FF8A3D" transform="rotate(-7 13 28)"/>
+              <rect x="9" y="6" width="14" height="44" rx="6" fill="#FFD338" transform="rotate(-2 16 28)"/>
+              <rect x="12" y="6" width="14" height="44" rx="6" fill="#2BC489" transform="rotate(3 19 28)"/>
+              <rect x="15" y="6" width="14" height="44" rx="6" fill="#3DAEFF" transform="rotate(8 22 28)"/>
+            </g>
+            <path d="M14 6 H40 A8 8 0 0 1 48 14 V38 A8 8 0 0 1 40 46 H28 L18 54 L20 46 A6 6 0 0 1 14 40 V6 Z" fill="#6E3DEA"/>
+            <circle cx="22" cy="22" r="2.4" fill="#fff"/>
+            <circle cx="34" cy="22" r="2.4" fill="#fff"/>
+            <path d="M22 30 Q28 36 34 30" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">popcard<sup>&reg;</sup></span>
+      </a>
+      <nav class="nav">
+        <a href="/#how">How it works</a>
+        <a href="/examples">Examples</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/login" data-guest-only>Log in</a>
+        <a href="/login" class="btn-primary" data-guest-only data-track="Sign Up">Sign up free</a>
+        <a href="/account" class="user-chip" data-auth-only style="display:none">
+          <img data-auth-picture alt="" referrerpolicy="no-referrer" />
+          <span data-auth-name>Account</span>
+        </a>
+      </nav>
+    </header>
+
+    <section class="subhero">
+      <div class="eyebrow">Pricing</div>
+      <h1>Pick the plan that <span class="accent">pops</span>.</h1>
+      <p>Start free. Upgrade when you want unlimited cards, study mode, and exports.</p>
+    </section>
+
+    <section class="pricing">
+      <div class="pricing-grid">
+        <div class="tier">
+          <div class="tier-name">Free</div>
+          <div class="tier-tag">For trying it out</div>
+          <div class="tier-price">
+            <span class="amount">$0</span>
+            <span class="per">/ forever</span>
+          </div>
+          <a href="/" class="tier-cta" data-track="Pricing CTA" data-track-tier="Free">Get started</a>
+          <div class="tier-divider"></div>
+          <ul class="tier-feats">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>10 popcards per month</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Simple mode</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Basic deck sharing</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>YouTube + text input</li>
+          </ul>
+        </div>
+
+        <div class="tier featured">
+          <span class="tier-badge">Most popular</span>
+          <div class="tier-name">Pro</div>
+          <div class="tier-tag">For serious learners</div>
+          <div class="tier-price">
+            <span class="amount">$9</span>
+            <span class="per">/ month</span>
+          </div>
+          <button type="button" class="tier-cta" data-checkout="pro" data-track="Pricing CTA" data-track-tier="Pro">Start free trial</button>
+          <div class="tier-divider"></div>
+          <ul class="tier-feats">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited popcards</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Simple <em>and</em> Study modes</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Export to Anki, PDF, CSV</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom decks &amp; folders</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Priority support</li>
+          </ul>
+        </div>
+
+        <div class="tier">
+          <div class="tier-name">Team</div>
+          <div class="tier-tag">For classes &amp; study groups</div>
+          <div class="tier-price">
+            <span class="amount">$29</span>
+            <span class="per">/ seat / month</span>
+          </div>
+          <button type="button" class="tier-cta" data-checkout="team" data-track="Pricing CTA" data-track-tier="Team">Get Team</button>
+          <div class="tier-divider"></div>
+          <ul class="tier-feats">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Pro</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Shared workspaces</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Admin controls &amp; SSO</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Team usage analytics</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dedicated success manager</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>Common questions</h2>
+      <details class="faq-item">
+        <summary>Can I cancel anytime?</summary>
+        <p>Yes — cancel from your account settings in one click. You'll keep Pro features until the end of the current billing period.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What counts as a popcard?</summary>
+        <p>One popcard is one source you "pop" — a YouTube video, an article, a block of notes. Each pop generates a deck of multiple cards. Free includes 10 pops per month; Pro is unlimited.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you offer student discounts?</summary>
+        <p>Verified students get 50% off Pro. Reach out from your school email after signing up and we'll apply the discount.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How is my data used?</summary>
+        <p>Your content is yours. We don't sell data, don't train models on your popcards, and use privacy-friendly analytics (Vercel Web Analytics) with no cookies.</p>
+      </details>
+    </section>
+
+    <div class="trust">
+      <span>Loved by learners everywhere</span>
+      <span class="stars">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+      </span>
+      <span><strong style="color:var(--ink)">4.9/5</strong> from 1,000+ users</span>
+    </div>
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="page.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.querySelectorAll('[data-checkout]').forEach((btn) => {
+      btn.addEventListener('click', () => window.PopcardAuth.startCheckout(btn.dataset.checkout));
+    });
+  </script>
+</body>
+</html>

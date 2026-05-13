@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deck — Popcard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="/" class="brand">
+        <div class="brand-logo" aria-label="Popcard logo">
+          <svg viewBox="0 0 56 56" width="44" height="44">
+            <g>
+              <rect x="3" y="6" width="14" height="44" rx="6" fill="#FF3DA0" transform="rotate(-12 10 28)"/>
+              <rect x="6" y="6" width="14" height="44" rx="6" fill="#FF8A3D" transform="rotate(-7 13 28)"/>
+              <rect x="9" y="6" width="14" height="44" rx="6" fill="#FFD338" transform="rotate(-2 16 28)"/>
+              <rect x="12" y="6" width="14" height="44" rx="6" fill="#2BC489" transform="rotate(3 19 28)"/>
+              <rect x="15" y="6" width="14" height="44" rx="6" fill="#3DAEFF" transform="rotate(8 22 28)"/>
+            </g>
+            <path d="M14 6 H40 A8 8 0 0 1 48 14 V38 A8 8 0 0 1 40 46 H28 L18 54 L20 46 A6 6 0 0 1 14 40 V6 Z" fill="#6E3DEA"/>
+            <circle cx="22" cy="22" r="2.4" fill="#fff"/>
+            <circle cx="34" cy="22" r="2.4" fill="#fff"/>
+            <path d="M22 30 Q28 36 34 30" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">popcard<sup>&reg;</sup></span>
+      </a>
+      <nav class="nav">
+        <a href="/#how">How it works</a>
+        <a href="/examples">Examples</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/account" class="user-chip" data-auth-only style="display:none">
+          <img data-auth-picture alt="" referrerpolicy="no-referrer" />
+          <span data-auth-name>Account</span>
+        </a>
+      </nav>
+    </header>
+
+    <main class="deck-view">
+      <div class="deck-loading" id="deck-loading">Loading deck…</div>
+
+      <div class="deck-error" id="deck-error" hidden></div>
+
+      <div class="deck-meta" id="deck-meta" hidden>
+        <span class="tier-pill" id="deck-mode-pill"></span>
+        <h1 class="deck-title" id="deck-title">Loading…</h1>
+        <a class="deck-source" id="deck-source" target="_blank" rel="noopener" hidden></a>
+      </div>
+
+      <div class="deck-card-wrap" id="deck-card-wrap" hidden>
+        <button class="deck-card-flip" id="deck-card" type="button" aria-label="Reveal answer">
+          <div class="deck-card-side deck-card-q">
+            <div class="deck-card-count" id="deck-card-count">1 / 1</div>
+            <div class="deck-card-question" id="deck-card-question"></div>
+            <div class="deck-card-hint" id="deck-card-hint"></div>
+            <div class="deck-card-tap">Tap to reveal</div>
+          </div>
+          <div class="deck-card-side deck-card-a">
+            <div class="deck-card-count" id="deck-card-count-back">1 / 1</div>
+            <div class="deck-card-answer" id="deck-card-answer"></div>
+            <div class="deck-card-tap">Tap to hide</div>
+          </div>
+        </button>
+
+        <div class="deck-controls">
+          <button class="deck-nav-btn" id="deck-prev" type="button" aria-label="Previous card">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5"/><path d="m11 18-6-6 6-6"/>
+            </svg>
+          </button>
+          <div class="deck-progress" id="deck-progress"></div>
+          <button class="deck-nav-btn primary" id="deck-next" type="button" aria-label="Next card">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="deck-actions">
+          <a class="deck-action-link" href="/">Pop another</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="auth.js"></script>
+  <script src="deck-view.js"></script>
+</body>
+</html>

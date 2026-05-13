@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Examples — Popcard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="index.html" class="brand">
+        <div class="brand-logo" aria-label="Popcard logo">
+          <svg viewBox="0 0 56 56" width="44" height="44">
+            <g>
+              <rect x="3" y="6" width="14" height="44" rx="6" fill="#FF3DA0" transform="rotate(-12 10 28)"/>
+              <rect x="6" y="6" width="14" height="44" rx="6" fill="#FF8A3D" transform="rotate(-7 13 28)"/>
+              <rect x="9" y="6" width="14" height="44" rx="6" fill="#FFD338" transform="rotate(-2 16 28)"/>
+              <rect x="12" y="6" width="14" height="44" rx="6" fill="#2BC489" transform="rotate(3 19 28)"/>
+              <rect x="15" y="6" width="14" height="44" rx="6" fill="#3DAEFF" transform="rotate(8 22 28)"/>
+            </g>
+            <path d="M14 6 H40 A8 8 0 0 1 48 14 V38 A8 8 0 0 1 40 46 H28 L18 54 L20 46 A6 6 0 0 1 14 40 V6 Z" fill="#6E3DEA"/>
+            <circle cx="22" cy="22" r="2.4" fill="#fff"/>
+            <circle cx="34" cy="22" r="2.4" fill="#fff"/>
+            <path d="M22 30 Q28 36 34 30" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">popcard<sup>&reg;</sup></span>
+      </a>
+      <nav class="nav">
+        <a href="/#how">How it works</a>
+        <a href="/examples">Examples</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/login" data-guest-only>Log in</a>
+        <a href="/login" class="btn-primary" data-guest-only data-track="Sign Up">Sign up free</a>
+        <a href="/account" class="user-chip" data-auth-only style="display:none">
+          <img data-auth-picture alt="" referrerpolicy="no-referrer" />
+          <span data-auth-name>Account</span>
+        </a>
+      </nav>
+    </header>
+
+    <section class="subhero">
+      <div class="eyebrow">Examples</div>
+      <h1>See Popcard in <span class="accent">action</span>.</h1>
+      <p>Real popcards generated from real content. Hover any card to see it lift off the page.</p>
+    </section>
+
+    <section class="examples">
+      <div class="examples-filters" role="tablist">
+        <button class="filter-chip active" data-filter="all" type="button">All</button>
+        <button class="filter-chip" data-filter="video" type="button">Videos</button>
+        <button class="filter-chip" data-filter="article" type="button">Articles</button>
+        <button class="filter-chip" data-filter="notes" type="button">Notes</button>
+      </div>
+
+      <div class="examples-grid">
+        <article class="example" data-category="video">
+          <div class="example-source">
+            <span class="example-source-icon" style="background:#FF0033">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            From a YouTube biology lecture
+          </div>
+          <div class="example-card" style="background:#6E3DEA">
+            <div class="count">1 / 24</div>
+            <div class="q">What is photosynthesis?</div>
+            <div class="body">Photosynthesis is the process used by plants, algae and some bacteria to convert light energy into chemical energy stored in glucose.</div>
+            <span class="tag">Simple</span>
+          </div>
+        </article>
+
+        <article class="example" data-category="notes">
+          <div class="example-source">
+            <span class="example-source-icon" style="background:#2BC489">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14"/><path d="M5 13h10"/></svg>
+            </span>
+            From handwritten geometry notes
+          </div>
+          <div class="example-card" style="background:#FF3DA0">
+            <div class="count">3 / 12</div>
+            <div class="q">Pythagorean theorem?</div>
+            <div class="body">In a right triangle, the square of the hypotenuse equals the sum of the squares of the other two sides: <strong>a² + b² = c²</strong>.</div>
+            <span class="tag">Study</span>
+          </div>
+        </article>
+
+        <article class="example" data-category="article">
+          <div class="example-source">
+            <span class="example-source-icon" style="background:#3DAEFF">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg>
+            </span>
+            From a Wikipedia article on history
+          </div>
+          <div class="example-card" style="background:#FF8A3D">
+            <div class="count">7 / 30</div>
+            <div class="q">When did the French Revolution start?</div>
+            <div class="body">The storming of the Bastille on <strong>14 July 1789</strong> marked the beginning of the French Revolution.</div>
+            <span class="tag">Simple</span>
+          </div>
+        </article>
+
+        <article class="example" data-category="video">
+          <div class="example-source">
+            <span class="example-source-icon" style="background:#FF0033">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            From a physics tutorial video
+          </div>
+          <div class="example-card" style="background:#FFD338; color:#1F1F2A">
+            <div class="count" style="opacity:.6">2 / 18</div>
+            <div class="q" style="border-color:rgba(31,31,42,0.2)">Newton's third law?</div>
+            <div class="body">For every action, there is an equal and opposite reaction. When you push on a wall, the wall pushes back on you with the same force.</div>
+            <span class="tag" style="background:rgba(31,31,42,0.12); color:#1F1F2A">Simple</span>
+          </div>
+        </article>
+
+        <article class="example" data-category="notes">
+          <div class="example-source">
+            <span class="example-source-icon" style="background:#2BC489">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14"/><path d="M5 13h10"/></svg>
+            </span>
+            From lecture notes on cell biology
+          </div>
+          <div class="example-card" style="background:#2BC489">
+            <div class="count">5 / 22</div>
+            <div class="q">Function of mitochondria?</div>
+            <div class="body">Mitochondria are the <em>powerhouse of the cell</em> — they generate most of the cell's ATP through cellular respiration.</div>
+            <span class="tag">Study</span>
+          </div>
+        </article>
+
+        <article class="example" data-category="article">
+          <div class="example-source">
+            <span class="example-source-icon" style="background:#3DAEFF">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg>
+            </span>
+            From an economics blog post
+          </div>
+          <div class="example-card" style="background:#3DAEFF">
+            <div class="count">4 / 15</div>
+            <div class="q">Law of supply and demand?</div>
+            <div class="body">As price increases, supply rises and demand falls. The point where they meet is the market equilibrium.</div>
+            <span class="tag">Study</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="trust">
+      <span>Loved by learners everywhere</span>
+      <span class="stars">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+      </span>
+      <span><strong style="color:var(--ink)">4.9/5</strong> from 1,000+ users</span>
+    </div>
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="page.js"></script>
+  <script src="auth.js"></script>
+  <script src="examples.js"></script>
+</body>
+</html>

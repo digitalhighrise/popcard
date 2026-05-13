@@ -1,0 +1,11 @@
+{
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": null,
+  "installCommand": "npm install",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/deck/:id", "destination": "/deck?id=:id" }
+  ]
+}

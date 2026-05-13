@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Account — Popcard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="/" class="brand">
+        <div class="brand-logo" aria-label="Popcard logo">
+          <svg viewBox="0 0 56 56" width="44" height="44">
+            <g>
+              <rect x="3" y="6" width="14" height="44" rx="6" fill="#FF3DA0" transform="rotate(-12 10 28)"/>
+              <rect x="6" y="6" width="14" height="44" rx="6" fill="#FF8A3D" transform="rotate(-7 13 28)"/>
+              <rect x="9" y="6" width="14" height="44" rx="6" fill="#FFD338" transform="rotate(-2 16 28)"/>
+              <rect x="12" y="6" width="14" height="44" rx="6" fill="#2BC489" transform="rotate(3 19 28)"/>
+              <rect x="15" y="6" width="14" height="44" rx="6" fill="#3DAEFF" transform="rotate(8 22 28)"/>
+            </g>
+            <path d="M14 6 H40 A8 8 0 0 1 48 14 V38 A8 8 0 0 1 40 46 H28 L18 54 L20 46 A6 6 0 0 1 14 40 V6 Z" fill="#6E3DEA"/>
+            <circle cx="22" cy="22" r="2.4" fill="#fff"/>
+            <circle cx="34" cy="22" r="2.4" fill="#fff"/>
+            <path d="M22 30 Q28 36 34 30" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">popcard<sup>&reg;</sup></span>
+      </a>
+      <nav class="nav">
+        <a href="/#how">How it works</a>
+        <a href="/examples">Examples</a>
+        <a href="/pricing">Pricing</a>
+        <button class="btn-primary" type="button" id="sign-out-btn">Sign out</button>
+      </nav>
+    </header>
+
+    <main class="account">
+      <div class="account-card" id="account-card" hidden>
+        <img class="account-avatar" data-auth-picture alt="" referrerpolicy="no-referrer" />
+        <div class="account-meta">
+          <div class="account-greeting">Hi, <span data-auth-name>there</span> 👋</div>
+          <div class="account-tier">
+            Current plan: <span class="tier-pill" data-auth-tier>free</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="account-actions" id="actions-free" hidden>
+        <h2>Upgrade your plan</h2>
+        <p>Unlock unlimited popcards, Study mode, and exports.</p>
+        <div class="account-cta-row">
+          <button type="button" class="tier-cta" data-checkout="pro">Upgrade to Pro · $9/mo</button>
+          <button type="button" class="tier-cta" data-checkout="team" style="background: var(--ink)">Upgrade to Team · $29/seat/mo</button>
+        </div>
+      </section>
+
+      <section class="account-actions" id="actions-paid" hidden>
+        <h2>You're on a paid plan</h2>
+        <p>Manage your subscription, change plan, or cancel anytime.</p>
+        <div class="account-cta-row">
+          <a href="mailto:support@popcard.app" class="tier-cta" style="background: var(--ink)">Contact support</a>
+        </div>
+      </section>
+
+      <div class="account-loading" id="account-loading">Loading your account…</div>
+    </main>
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    (async function init() {
+      const loading = document.getElementById('account-loading');
+      const card = document.getElementById('account-card');
+      const free = document.getElementById('actions-free');
+      const paid = document.getElementById('actions-paid');
+
+      const user = await window.PopcardAuth.me();
+      if (!user) {
+        window.location.href = '/login?next=' + encodeURIComponent('/account');
+        return;
+      }
+      loading.hidden = true;
+      card.hidden = false;
+      if (user.tier === 'free') free.hidden = false;
+      else paid.hidden = false;
+
+      document.querySelectorAll('[data-checkout]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          window.PopcardAnalytics?.track('Account Upgrade', { tier: btn.dataset.checkout });
+          window.PopcardAuth.startCheckout(btn.dataset.checkout);
+        });
+      });
+
+      document.getElementById('sign-out-btn').addEventListener('click', async () => {
+        await window.PopcardAuth.signOut();
+        window.PopcardAnalytics?.track('Sign Out');
+        window.location.href = '/';
+      });
+    })();
+  </script>
+</body>
+</html>
