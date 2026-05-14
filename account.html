@@ -114,6 +114,36 @@
       return '<span class="account-deck-source">📝 Text</span>';
     }
 
+    function renderDeckCard(d) {
+      return `
+        <article class="account-deck-card${d.pinned ? ' is-pinned' : ''}" data-deck-id="${d.id}">
+          <a class="account-deck-link" href="/deck/${d.id}">
+            <div class="account-deck-top">
+              <span class="tier-pill account-deck-mode" data-mode="${d.mode}">${d.mode}</span>
+              <span class="account-deck-time">${timeAgo(d.createdAt)}</span>
+            </div>
+            <h3 class="account-deck-title">${escapeHtml(d.title || 'Untitled')}</h3>
+            <div class="account-deck-meta">
+              ${sourceBadge(d)}
+              <span class="account-deck-count">${d.cardCount} card${d.cardCount === 1 ? '' : 's'}</span>
+            </div>
+          </a>
+          <div class="account-deck-actions">
+            <button type="button" class="account-deck-action account-deck-pin" data-action="pin" title="${d.pinned ? 'Unpin' : 'Pin to top'}" aria-label="${d.pinned ? 'Unpin' : 'Pin to top'}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="${d.pinned ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 2 3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/>
+              </svg>
+            </button>
+            <button type="button" class="account-deck-action account-deck-delete" data-action="delete" title="Delete" aria-label="Delete deck">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              </svg>
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
     async function loadDecks() {
       const section = document.getElementById('account-decks');
       const loading = document.getElementById('account-decks-loading');
@@ -132,22 +162,67 @@
           return;
         }
         gridEl.hidden = false;
-        gridEl.innerHTML = decks.map((d) => `
-          <a class="account-deck-card" href="/deck/${d.id}">
-            <div class="account-deck-top">
-              <span class="tier-pill account-deck-mode" data-mode="${d.mode}">${d.mode}</span>
-              <span class="account-deck-time">${timeAgo(d.createdAt)}</span>
-            </div>
-            <h3 class="account-deck-title">${escapeHtml(d.title || 'Untitled')}</h3>
-            <div class="account-deck-meta">
-              ${sourceBadge(d)}
-              <span class="account-deck-count">${d.cardCount} card${d.cardCount === 1 ? '' : 's'}</span>
-            </div>
-          </a>
-        `).join('');
+        gridEl.innerHTML = decks.map(renderDeckCard).join('');
+        wireDeckActions(gridEl);
       } catch (e) {
         loading.textContent = "Couldn't load your decks. Refresh to try again.";
       }
+    }
+
+    function wireDeckActions(root) {
+      root.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const card = btn.closest('.account-deck-card');
+        const id = card.dataset.deckId;
+
+        if (btn.dataset.action === 'pin') {
+          const isPinned = card.classList.contains('is-pinned');
+          btn.disabled = true;
+          try {
+            const r = await fetch('/api/deck?id=' + encodeURIComponent(id), {
+              method: 'PATCH',
+              credentials: 'same-origin',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ pinned: !isPinned }),
+            });
+            if (!r.ok) throw new Error('pin failed');
+            // Move pinned card to top of grid; just reload for simplicity
+            loadDecks();
+            window.PopcardAnalytics?.track('Deck Pin', { pinned: String(!isPinned) });
+          } catch {
+            btn.disabled = false;
+            alert("Couldn't update — try again.");
+          }
+        } else if (btn.dataset.action === 'delete') {
+          if (!confirm('Delete this deck? This cannot be undone.')) return;
+          btn.disabled = true;
+          try {
+            const r = await fetch('/api/deck?id=' + encodeURIComponent(id), {
+              method: 'DELETE',
+              credentials: 'same-origin',
+            });
+            if (!r.ok) throw new Error('delete failed');
+            card.style.transition = 'opacity .2s, transform .2s';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.96)';
+            setTimeout(() => card.remove(), 220);
+            window.PopcardAnalytics?.track('Deck Delete');
+            // Show empty state if it was the last one
+            setTimeout(() => {
+              if (!document.querySelector('.account-deck-card')) {
+                document.getElementById('account-decks-grid').hidden = true;
+                document.getElementById('account-decks-empty').hidden = false;
+              }
+            }, 240);
+          } catch {
+            btn.disabled = false;
+            alert("Couldn't delete — try again.");
+          }
+        }
+      });
     }
 
     (async function init() {

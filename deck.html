@@ -49,9 +49,27 @@
       <div class="deck-error" id="deck-error" hidden></div>
 
       <div class="deck-meta" id="deck-meta" hidden>
+        <a class="deck-breadcrumb" href="/account">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+          Your decks
+        </a>
         <span class="tier-pill" id="deck-mode-pill"></span>
-        <h1 class="deck-title" id="deck-title">Loading…</h1>
+        <h1 class="deck-title" id="deck-title" title="Click to rename">Loading…</h1>
         <a class="deck-source" id="deck-source" target="_blank" rel="noopener" hidden></a>
+        <div class="deck-meta-actions">
+          <button type="button" class="deck-meta-btn" id="deck-pin" title="Pin to top of your decks" aria-label="Pin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z"/></svg>
+            <span id="deck-pin-label">Pin</span>
+          </button>
+          <button type="button" class="deck-meta-btn" id="deck-rename" title="Rename this deck">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            Rename
+          </button>
+          <button type="button" class="deck-meta-btn deck-meta-btn-danger" id="deck-delete" title="Delete this deck">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+            Delete
+          </button>
+        </div>
       </div>
 
       <!-- Single-card view -->

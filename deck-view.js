@@ -54,6 +54,12 @@
   const gridBack = $('deck-grid-back');
   const startQuizBtn = $('deck-start-quiz');
 
+  // Deck-level action refs
+  const pinBtn = $('deck-pin');
+  const pinLabel = $('deck-pin-label');
+  const renameBtn = $('deck-rename');
+  const deleteBtn = $('deck-delete');
+
   // Quiz refs
   const quizWrap = $('deck-quiz-wrap');
   const quizLoading = $('deck-quiz-loading');
@@ -519,6 +525,109 @@
           btn.textContent = originalLabel;
         }
       });
+    });
+
+    // ---------- Deck-level actions: rename, pin, delete ----------
+    let isPinned = !!deck.pinned;
+    function paintPin() {
+      pinBtn.classList.toggle('is-pinned', isPinned);
+      pinLabel.textContent = isPinned ? 'Pinned' : 'Pin';
+      const svg = pinBtn.querySelector('svg');
+      if (svg) svg.setAttribute('fill', isPinned ? 'currentColor' : 'none');
+    }
+    paintPin();
+
+    pinBtn.addEventListener('click', async () => {
+      pinBtn.disabled = true;
+      try {
+        const r = await fetch('/api/deck?id=' + encodeURIComponent(deck.id), {
+          method: 'PATCH',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pinned: !isPinned }),
+        });
+        if (!r.ok) throw new Error('pin failed');
+        isPinned = !isPinned;
+        paintPin();
+        window.PopcardAnalytics?.track('Deck Pin', { pinned: String(isPinned) });
+      } catch {
+        alert("Couldn't update pin — try again.");
+      } finally {
+        pinBtn.disabled = false;
+      }
+    });
+
+    function startRename() {
+      const old = titleEl.textContent;
+      titleEl.contentEditable = 'true';
+      titleEl.classList.add('is-editing');
+      titleEl.focus();
+      // Select all text
+      const range = document.createRange();
+      range.selectNodeContents(titleEl);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      let done = false;
+      const finish = async (save) => {
+        if (done) return;
+        done = true;
+        titleEl.contentEditable = 'false';
+        titleEl.classList.remove('is-editing');
+        const next = titleEl.textContent.trim().slice(0, 140);
+        if (!save || !next || next === old) {
+          titleEl.textContent = old;
+          return;
+        }
+        try {
+          const r = await fetch('/api/deck?id=' + encodeURIComponent(deck.id), {
+            method: 'PATCH',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: next }),
+          });
+          if (!r.ok) throw new Error('rename failed');
+          titleEl.textContent = next;
+          window.PopcardAnalytics?.track('Deck Rename');
+        } catch {
+          titleEl.textContent = old;
+          alert("Couldn't rename — try again.");
+        }
+      };
+
+      const onKey = (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+        else if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+      };
+      titleEl.addEventListener('keydown', onKey, { once: false });
+      titleEl.addEventListener('blur', () => {
+        titleEl.removeEventListener('keydown', onKey);
+        finish(true);
+      }, { once: true });
+    }
+
+    renameBtn.addEventListener('click', startRename);
+    titleEl.addEventListener('click', () => {
+      if (titleEl.classList.contains('is-editing')) return;
+      startRename();
+    });
+
+    deleteBtn.addEventListener('click', async () => {
+      if (!confirm(`Delete "${deck.title}"? This can't be undone.`)) return;
+      deleteBtn.disabled = true;
+      try {
+        const r = await fetch('/api/deck?id=' + encodeURIComponent(deck.id), {
+          method: 'DELETE',
+          credentials: 'same-origin',
+        });
+        if (!r.ok) throw new Error('delete failed');
+        window.PopcardAnalytics?.track('Deck Delete');
+        window.location.href = '/account';
+      } catch {
+        deleteBtn.disabled = false;
+        alert("Couldn't delete — try again.");
+      }
     });
 
     wrap.hidden = false;

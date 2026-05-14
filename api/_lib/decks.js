@@ -111,6 +111,8 @@ export async function createDeck({
 }
 
 export async function getDeckWithCards(deckId, userId) {
+  // Validate it looks like a uuid before hitting Postgres (avoids 22P02 errors on bad input).
+  if (!/^[\w-]{8,}$/.test(deckId || '')) return null;
   const rows = await sql`
     SELECT d.*,
       json_agg(

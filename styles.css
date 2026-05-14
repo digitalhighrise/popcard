@@ -1395,12 +1395,7 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
   border: 1.5px solid var(--line);
   border-radius: var(--r-lg);
-  padding: 18px 18px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
+  position: relative;
   transition: transform .15s, border-color .15s, box-shadow .2s;
 }
 .account-deck-card:hover {
@@ -1408,6 +1403,62 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--purple-ring);
   box-shadow: var(--shadow-sm);
 }
+.account-deck-card.is-pinned {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px var(--purple-soft);
+}
+.account-deck-link {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 56px 16px 18px;
+  text-decoration: none;
+  color: inherit;
+}
+.account-deck-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.account-deck-card:hover .account-deck-actions,
+.account-deck-card.is-pinned .account-deck-actions,
+.account-deck-card:focus-within .account-deck-actions { opacity: 1; }
+.account-deck-action {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  border: 1.5px solid var(--line);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--mute);
+  transition: color .15s, background .15s, border-color .15s, transform .15s;
+}
+.account-deck-action:hover:not(:disabled) {
+  background: #fff;
+  transform: translateY(-1px);
+}
+.account-deck-pin:hover:not(:disabled) {
+  color: var(--purple);
+  border-color: var(--purple-ring);
+}
+.account-deck-card.is-pinned .account-deck-pin {
+  color: var(--purple);
+  border-color: var(--purple);
+  background: var(--purple-soft);
+  opacity: 1;
+}
+.account-deck-delete:hover:not(:disabled) {
+  color: #B6321C;
+  border-color: rgba(255,107,92,0.4);
+  background: rgba(255,107,92,0.06);
+}
+.account-deck-action:disabled { opacity: 0.4; cursor: progress; }
 .account-deck-top {
   display: flex;
   align-items: center;
@@ -1556,9 +1607,25 @@ a { color: inherit; text-decoration: none; }
 .deck-meta {
   text-align: center;
   margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
+.deck-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  letter-spacing: -0.005em;
+  margin-bottom: 4px;
+  transition: color .15s;
+}
+.deck-breadcrumb:hover { color: var(--purple); }
 .deck-meta .tier-pill {
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 .deck-title {
   font-family: var(--font-display);
@@ -1566,8 +1633,20 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(28px, 4vw, 40px);
   letter-spacing: -0.035em;
   line-height: 1.1;
-  margin: 0 0 8px;
+  margin: 0;
   color: var(--ink);
+  max-width: 760px;
+  cursor: text;
+  border-radius: var(--r-md);
+  padding: 4px 10px;
+  transition: background .15s, box-shadow .15s;
+  outline: none;
+}
+.deck-title:hover { background: var(--surface); }
+.deck-title.is-editing {
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--purple-soft);
+  cursor: text;
 }
 .deck-source {
   font-size: 13px;
@@ -1576,6 +1655,48 @@ a { color: inherit; text-decoration: none; }
   word-break: break-all;
 }
 .deck-source:hover { color: var(--purple); text-decoration: underline; }
+
+.deck-meta-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+.deck-meta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  color: var(--ink-2);
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+.deck-meta-btn:hover:not(:disabled) {
+  background: #fff;
+  border-color: var(--purple-ring);
+  color: var(--purple);
+  transform: translateY(-1px);
+}
+.deck-meta-btn:disabled { opacity: 0.5; cursor: progress; }
+.deck-meta-btn.is-pinned {
+  background: var(--purple-soft);
+  border-color: var(--purple);
+  color: var(--purple);
+}
+.deck-meta-btn.is-pinned svg { color: var(--purple); }
+.deck-meta-btn-danger:hover:not(:disabled) {
+  background: rgba(255,107,92,0.08);
+  border-color: rgba(255,107,92,0.45);
+  color: #B6321C;
+}
 
 .deck-card-wrap {
   perspective: 1500px;

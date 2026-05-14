@@ -9,10 +9,10 @@ export default async function handler(req, res) {
   const limit = Math.min(parseInt(req.query?.limit, 10) || 30, 50);
 
   const rows = await sql`
-    SELECT id, title, mode, card_count, source_type, source_url, from_cache, created_at
+    SELECT id, title, mode, card_count, source_type, source_url, from_cache, pinned, created_at
     FROM decks
     WHERE user_id = ${session.uid}
-    ORDER BY created_at DESC
+    ORDER BY pinned DESC, created_at DESC
     LIMIT ${limit}
   `;
 
@@ -25,6 +25,7 @@ export default async function handler(req, res) {
       sourceType: d.source_type,
       sourceUrl: d.source_url,
       fromCache: d.from_cache,
+      pinned: d.pinned,
       createdAt: d.created_at,
     })),
   });
