@@ -630,6 +630,334 @@
       }
     });
 
+    // ---------- Export menu (Markdown + TikTok carousel) ----------
+    const exportBtn = $('deck-export-btn');
+    const exportMenu = $('deck-export-menu');
+    const tiktokModal = $('tiktok-modal');
+    const tiktokModalClose = $('tiktok-modal-close');
+
+    if (exportBtn) {
+      exportBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        exportMenu.hidden = !exportMenu.hidden;
+      });
+      document.addEventListener('click', (e) => {
+        if (exportMenu.hidden) return;
+        if (!exportMenu.contains(e.target) && e.target !== exportBtn) {
+          exportMenu.hidden = true;
+        }
+      });
+      exportMenu.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-export]');
+        if (!btn || btn.disabled) return;
+        exportMenu.hidden = true;
+        const fmt = btn.dataset.export;
+        if (fmt === 'markdown') {
+          exportMarkdown();
+          window.PopcardAnalytics?.track('Deck Export', { format: 'markdown' });
+        } else if (fmt === 'tiktok') {
+          await exportTikTok();
+          window.PopcardAnalytics?.track('Deck Export', { format: 'tiktok' });
+        }
+      });
+    }
+    if (tiktokModalClose) {
+      tiktokModalClose.addEventListener('click', () => { tiktokModal.hidden = true; });
+      tiktokModal.querySelector('.tiktok-modal-backdrop')?.addEventListener('click', () => { tiktokModal.hidden = true; });
+    }
+
+    function slugify(s) {
+      return String(s || 'popcard').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+    }
+    function triggerDownload(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function exportMarkdown() {
+      const title = titleEl.textContent.trim();
+      let md = `# ${title}\n\n`;
+      if (deck.sourceUrl) md += `**Source:** ${deck.sourceUrl}\n\n`;
+      md += `Generated with [Popcard](https://www.popcard.me) — ${deck.mode} mode, ${cards.length} cards.\n\n---\n\n`;
+      cards.forEach((c, i) => {
+        md += `## ${i + 1}. ${c.question}\n\n${c.answer}\n\n`;
+        if (c.hint) md += `> 💡 ${c.hint}\n\n`;
+        const tags = [c.type, c.importance].filter(Boolean).map((t) => `\`${t}\``).join(' ');
+        if (tags) md += `${tags}\n\n`;
+        if (c.sourceTimestampSeconds != null && deck.sourceUrl?.includes('youtube')) {
+          try {
+            const url = new URL(deck.sourceUrl);
+            url.searchParams.set('t', Math.max(0, Math.floor(c.sourceTimestampSeconds)) + 's');
+            md += `[▶ Watch at ${formatSeconds(c.sourceTimestampSeconds)}](${url.toString()})\n\n`;
+          } catch {}
+        }
+        md += `---\n\n`;
+      });
+      triggerDownload(new Blob([md], { type: 'text/markdown;charset=utf-8' }), `${slugify(title)}.md`);
+    }
+
+    // ---------- Canvas card image renderer + ZIP for TikTok ----------
+    const TIKTOK_PALETTE = [
+      { bg: '#6E3DEA', tone: 'light' },
+      { bg: '#FF3DA0', tone: 'light' },
+      { bg: '#FF8A3D', tone: 'light' },
+      { bg: '#FFD338', tone: 'dark'  },
+      { bg: '#2BC489', tone: 'light' },
+      { bg: '#3DAEFF', tone: 'light' },
+    ];
+
+    function wrapTextLines(ctx, text, maxWidth) {
+      const words = String(text).split(/\s+/);
+      const lines = [];
+      let line = '';
+      for (const w of words) {
+        const test = line ? line + ' ' + w : w;
+        if (ctx.measureText(test).width > maxWidth && line) {
+          lines.push(line);
+          line = w;
+        } else {
+          line = test;
+        }
+      }
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function fillRoundedRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    async function renderCardPng({ kind, card, index, total, title, color }) {
+      const W = 1080, H = 1350;
+      const canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      const fontStack = '"Sora", system-ui, -apple-system, "Segoe UI", sans-serif';
+      const bodyFont = '"Plus Jakarta Sans", system-ui, -apple-system, sans-serif';
+
+      // background
+      ctx.fillStyle = color.bg;
+      ctx.fillRect(0, 0, W, H);
+      const tx = color.tone === 'dark' ? '#0F0F14' : '#FFFFFF';
+      const inkSoft = color.tone === 'dark' ? 'rgba(15,15,20,0.6)' : 'rgba(255,255,255,0.78)';
+      const lineColor = color.tone === 'dark' ? 'rgba(15,15,20,0.22)' : 'rgba(255,255,255,0.26)';
+
+      if (kind === 'cover') {
+        // Centered cover
+        ctx.fillStyle = inkSoft;
+        ctx.font = `700 30px ${fontStack}`;
+        ctx.fillText('POPCARD', 80, 110);
+
+        ctx.fillStyle = tx;
+        ctx.font = `800 76px ${fontStack}`;
+        const lines = wrapTextLines(ctx, title || 'Untitled deck', W - 160);
+        let y = 380;
+        for (const ln of lines) { ctx.fillText(ln, 80, y); y += 96; }
+
+        ctx.fillStyle = inkSoft;
+        ctx.font = `600 40px ${bodyFont}`;
+        ctx.fillText(`${total} cards · swipe →`, 80, y + 40);
+
+        ctx.fillStyle = inkSoft;
+        ctx.font = `700 26px ${fontStack}`;
+        ctx.fillText('popcard.me', 80, H - 70);
+      } else if (kind === 'outro') {
+        ctx.fillStyle = tx;
+        ctx.font = `800 72px ${fontStack}`;
+        const lines = wrapTextLines(ctx, 'Pop your own deck.', W - 160);
+        let y = 420;
+        for (const ln of lines) { ctx.fillText(ln, 80, y); y += 92; }
+
+        ctx.fillStyle = inkSoft;
+        ctx.font = `500 40px ${bodyFont}`;
+        const subLines = wrapTextLines(ctx, 'Paste a YouTube link or any text. Get colourful cards in seconds.', W - 160);
+        y += 30;
+        for (const ln of subLines) { ctx.fillText(ln, 80, y); y += 58; }
+
+        ctx.fillStyle = tx;
+        ctx.font = `800 56px ${fontStack}`;
+        ctx.fillText('popcard.me', 80, H - 90);
+      } else {
+        // Standard card
+        ctx.fillStyle = inkSoft;
+        ctx.font = `700 30px ${fontStack}`;
+        ctx.fillText(`${index + 1} / ${total}`, 80, 110);
+
+        // Question
+        ctx.fillStyle = tx;
+        ctx.font = `800 60px ${fontStack}`;
+        const qLines = wrapTextLines(ctx, card.question, W - 160);
+        let y = 220;
+        for (const ln of qLines) { ctx.fillText(ln, 80, y); y += 76; }
+
+        // Divider
+        y += 30;
+        ctx.fillStyle = lineColor;
+        ctx.fillRect(80, y, W - 160, 3);
+        y += 60;
+
+        // Answer
+        ctx.fillStyle = tx;
+        ctx.globalAlpha = 0.96;
+        ctx.font = `500 40px ${bodyFont}`;
+        const aLines = wrapTextLines(ctx, card.answer, W - 160);
+        for (const ln of aLines) {
+          if (y > H - 160) break; // don't run into branding
+          ctx.fillText(ln, 80, y); y += 56;
+        }
+        ctx.globalAlpha = 1;
+
+        // Importance badge (top-right) — only if must_know
+        if (card.importance === 'must_know') {
+          const badgeW = 200, badgeH = 56, bx = W - 80 - badgeW, by = 80;
+          ctx.fillStyle = '#FFD338';
+          fillRoundedRect(ctx, bx, by, badgeW, badgeH, 28);
+          ctx.fillStyle = '#0F0F14';
+          ctx.font = `800 22px ${fontStack}`;
+          ctx.fillText('MUST KNOW', bx + 24, by + 36);
+        }
+
+        // Branding
+        ctx.fillStyle = inkSoft;
+        ctx.font = `700 26px ${fontStack}`;
+        ctx.fillText('popcard.me', 80, H - 60);
+      }
+
+      return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+    }
+
+    // CRC32 + minimal stored-zip encoder (no deps)
+    const _crcTable = (() => {
+      const t = new Uint32Array(256);
+      for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let k = 0; k < 8; k++) c = (c & 1) ? 0xEDB88320 ^ (c >>> 1) : (c >>> 1);
+        t[i] = c;
+      }
+      return t;
+    })();
+    function crc32(data) {
+      let c = 0xFFFFFFFF;
+      for (let i = 0; i < data.length; i++) c = _crcTable[(c ^ data[i]) & 0xFF] ^ (c >>> 8);
+      return (c ^ 0xFFFFFFFF) >>> 0;
+    }
+    function makeZip(files) {
+      const enc = new TextEncoder();
+      const parts = [];
+      const central = [];
+      let offset = 0;
+      for (const f of files) {
+        const nameBytes = enc.encode(f.name);
+        const crc = crc32(f.data);
+        const size = f.data.length;
+        const local = new Uint8Array(30 + nameBytes.length);
+        const lv = new DataView(local.buffer);
+        lv.setUint32(0, 0x04034b50, true);
+        lv.setUint16(4, 20, true);
+        lv.setUint16(6, 0, true);
+        lv.setUint16(8, 0, true);
+        lv.setUint16(10, 0, true); lv.setUint16(12, 0, true);
+        lv.setUint32(14, crc, true);
+        lv.setUint32(18, size, true);
+        lv.setUint32(22, size, true);
+        lv.setUint16(26, nameBytes.length, true);
+        lv.setUint16(28, 0, true);
+        local.set(nameBytes, 30);
+        parts.push(local, f.data);
+
+        const ch = new Uint8Array(46 + nameBytes.length);
+        const cv = new DataView(ch.buffer);
+        cv.setUint32(0, 0x02014b50, true);
+        cv.setUint16(4, 20, true); cv.setUint16(6, 20, true);
+        cv.setUint16(8, 0, true); cv.setUint16(10, 0, true);
+        cv.setUint16(12, 0, true); cv.setUint16(14, 0, true);
+        cv.setUint32(16, crc, true);
+        cv.setUint32(20, size, true);
+        cv.setUint32(24, size, true);
+        cv.setUint16(28, nameBytes.length, true);
+        cv.setUint16(30, 0, true); cv.setUint16(32, 0, true);
+        cv.setUint16(34, 0, true); cv.setUint16(36, 0, true);
+        cv.setUint32(38, 0, true);
+        cv.setUint32(42, offset, true);
+        ch.set(nameBytes, 46);
+        central.push(ch);
+        offset += local.length + size;
+      }
+      const cdSize = central.reduce((s, h) => s + h.length, 0);
+      const cdOffset = offset;
+      for (const h of central) parts.push(h);
+      const eocd = new Uint8Array(22);
+      const ev = new DataView(eocd.buffer);
+      ev.setUint32(0, 0x06054b50, true);
+      ev.setUint16(4, 0, true); ev.setUint16(6, 0, true);
+      ev.setUint16(8, files.length, true);
+      ev.setUint16(10, files.length, true);
+      ev.setUint32(12, cdSize, true);
+      ev.setUint32(16, cdOffset, true);
+      ev.setUint16(20, 0, true);
+      parts.push(eocd);
+      return new Blob(parts, { type: 'application/zip' });
+    }
+
+    async function exportTikTok() {
+      const title = titleEl.textContent.trim();
+      const exportLabel = exportBtn;
+      const originalLabel = exportLabel.innerHTML;
+      exportLabel.disabled = true;
+      exportLabel.innerHTML = '<span class="quiz-spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px"></span> Rendering…';
+
+      try {
+        const files = [];
+        // Cap at 35 cards (TikTok carousel max) + cover + outro = 37, leave room.
+        const limit = Math.min(cards.length, 33);
+        const coverBlob = await renderCardPng({
+          kind: 'cover', total: limit, title, color: TIKTOK_PALETTE[0],
+        });
+        files.push({ name: '00-cover.png', data: new Uint8Array(await coverBlob.arrayBuffer()) });
+
+        for (let i = 0; i < limit; i++) {
+          const blob = await renderCardPng({
+            kind: 'card',
+            card: cards[i],
+            index: i,
+            total: limit,
+            color: TIKTOK_PALETTE[i % TIKTOK_PALETTE.length],
+          });
+          files.push({
+            name: `${String(i + 1).padStart(2, '0')}-${slugify(cards[i].question).slice(0, 40)}.png`,
+            data: new Uint8Array(await blob.arrayBuffer()),
+          });
+        }
+
+        const outroBlob = await renderCardPng({
+          kind: 'outro', total: limit, title, color: TIKTOK_PALETTE[limit % TIKTOK_PALETTE.length],
+        });
+        files.push({ name: `${String(limit + 1).padStart(2, '0')}-outro.png`, data: new Uint8Array(await outroBlob.arrayBuffer()) });
+
+        const zip = makeZip(files);
+        triggerDownload(zip, `${slugify(title)}-tiktok.zip`);
+
+        // Show the post-instructions modal
+        if (tiktokModal) tiktokModal.hidden = false;
+      } catch (e) {
+        console.error('TikTok export failed', e);
+        alert("Couldn't generate the carousel. Try again.");
+      } finally {
+        exportLabel.disabled = false;
+        exportLabel.innerHTML = originalLabel;
+      }
+    }
+
     wrap.hidden = false;
     render();
     window.PopcardAnalytics?.track('Deck Viewed', {

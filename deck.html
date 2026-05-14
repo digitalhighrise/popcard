@@ -69,6 +69,48 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
             Delete
           </button>
+          <div class="deck-export-wrap">
+            <button type="button" class="deck-meta-btn" id="deck-export-btn" title="Export or share">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/></svg>
+              Export
+            </button>
+            <div class="deck-export-menu" id="deck-export-menu" hidden>
+              <button type="button" data-export="markdown">
+                <span class="deck-export-icon">📝</span>
+                <span class="deck-export-label">Markdown <span class="deck-export-sub">.md file</span></span>
+              </button>
+              <button type="button" data-export="tiktok">
+                <span class="deck-export-icon">🎵</span>
+                <span class="deck-export-label">TikTok carousel <span class="deck-export-sub">ZIP of images</span></span>
+              </button>
+              <button type="button" data-export="anki" disabled>
+                <span class="deck-export-icon">🃏</span>
+                <span class="deck-export-label">Anki deck <span class="deck-export-sub">coming soon</span></span>
+              </button>
+              <button type="button" data-export="pdf" disabled>
+                <span class="deck-export-icon">📄</span>
+                <span class="deck-export-label">PDF <span class="deck-export-sub">coming soon</span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TikTok post-instructions modal -->
+      <div class="tiktok-modal" id="tiktok-modal" hidden>
+        <div class="tiktok-modal-backdrop"></div>
+        <div class="tiktok-modal-card" role="dialog" aria-labelledby="tiktok-modal-title">
+          <button type="button" class="tiktok-modal-close" id="tiktok-modal-close" aria-label="Close">×</button>
+          <h2 class="tiktok-modal-title" id="tiktok-modal-title">Your TikTok carousel is downloading 📥</h2>
+          <p class="tiktok-modal-sub">A zip with one image per card just hit your downloads. Here's how to post it:</p>
+          <ol class="tiktok-modal-steps">
+            <li>Unzip the file on your phone (AirDrop / Google Drive / iCloud usually does this).</li>
+            <li>Open the <strong>TikTok app</strong> on mobile and tap <strong>+</strong>.</li>
+            <li>Switch the mode at the bottom from <strong>Video</strong> to <strong>Photo</strong>.</li>
+            <li>Tap <strong>Select multiple</strong> and pick the images in order (cover → cards → outro).</li>
+            <li>Post the carousel — Popcard's branding is on every slide so it's ready to share.</li>
+          </ol>
+          <p class="tiktok-modal-foot">Heads up: TikTok only supports posting photos from the mobile app, not the web.</p>
         </div>
       </div>
 
