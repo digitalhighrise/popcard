@@ -1,3 +1,4 @@
+import './_lib/env.js';
 import Stripe from 'stripe';
 import { setSubscription } from './_lib/db.js';
 

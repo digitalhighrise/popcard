@@ -16,8 +16,9 @@
     extra_context: 'Extra',
   };
 
+  const pathMatch = window.location.pathname.match(/^\/deck\/([\w-]+)/);
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const id = pathMatch?.[1] || params.get('id');
 
   const $ = (sel) => document.getElementById(sel);
 

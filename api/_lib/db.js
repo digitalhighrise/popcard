@@ -1,4 +1,11 @@
+import './env.js';
 import { neon } from '@neondatabase/serverless';
+
+if (!process.env.POSTGRES_URL) {
+  throw new Error(
+    'POSTGRES_URL not set. Production: Vercel project env vars. Local dev: .env.local at project root.'
+  );
+}
 
 export const sql = neon(process.env.POSTGRES_URL);
 

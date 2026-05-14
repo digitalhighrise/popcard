@@ -1,3 +1,4 @@
+import '../_lib/env.js';
 import { OAuth2Client } from 'google-auth-library';
 import { upsertUser } from '../_lib/db.js';
 import { createSessionCookie } from '../_lib/session.js';

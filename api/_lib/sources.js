@@ -1,3 +1,4 @@
+import './env.js';
 import { YoutubeTranscript } from 'youtube-transcript';
 
 const YT_PATTERNS = [

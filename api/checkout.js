@@ -1,3 +1,4 @@
+import './_lib/env.js';
 import Stripe from 'stripe';
 import { getUser, setStripeCustomer } from './_lib/db.js';
 import { getSession } from './_lib/session.js';
