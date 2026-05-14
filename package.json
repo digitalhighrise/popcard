@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "start": "vercel dev --listen 3000",
+    "db:migrate": "node tools/migrate-cards-phase1.mjs"
+  },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "cookie": "^1.0.2",

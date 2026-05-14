@@ -83,24 +83,44 @@ Quota: free = 10 pops/month, pro/team = 1000/month soft cap. Enforced before the
 
 `.env.local` is gitignored. To recreate it on a fresh machine, see ONBOARDING.md or run `vercel env pull --environment development` (non-Sensitive vars only; `POSTGRES_URL` needs to be copied from Neon dashboard).
 
-## Local development
-**Important user preference:** iterate locally with `vercel dev`, not by deploying to production. See `~/.claude/projects/-Users-anthonycorby-Desktop-popcard/memory/feedback_local_dev_first.md`.
+## Local development — this is the default workflow
+
+**Iterate on `localhost:3000` against `vercel dev`. Do NOT deploy to Vercel for testing.** See `~/.claude/projects/-Users-anthonycorby-Desktop-popcard/memory/feedback_local_dev_first.md`.
 
 ```bash
-npm install
-./node_modules/.bin/vercel dev --listen 3000
-# Open http://localhost:3000
+npm install        # one time
+npm start          # starts vercel dev on port 3000
+
+# Open http://localhost:3000 in any signed-in browser.
+# Sign in via Google → land on /account → paste a YouTube link on /
 ```
 
-The `package.json` `scripts` is empty on purpose — `vercel dev` refuses to run if there's a `dev` script invoking itself.
+**Why `npm start` and not `npm run dev`:** Vercel CLI refuses to run if `package.json` has a `dev` script that invokes `vercel dev` (recursive invocation guard). Naming the script `start` sidesteps that.
 
-## Deploy (only when user explicitly asks)
+If port 3000 is busy: `lsof -ti:3000 | xargs kill` then `npm start` again.
+
+### How env vars work locally
+- `.env.local` (gitignored) at project root is the source of truth for local dev.
+- `api/_lib/env.js` loads it once at module init when not on Vercel. **Every API module that reads `process.env` at module-load time imports `./env.js` as its first import.** Don't skip this in new modules — without it, Vercel's Sensitive env vars (notably `POSTGRES_URL`) come through empty in dev and the function 500s.
+- In production on Vercel, `env.js` is a no-op — env vars are already set by the platform.
+
+### Migrations
+SQL migrations live in `tools/migrate-*.mjs`. Each script reads `POSTGRES_URL` from `.env.local` and runs a self-contained `ALTER TABLE` / `CREATE TABLE IF NOT EXISTS` batch. To run:
 ```bash
-export VERCEL_TOKEN=<short-lived token from vercel.com/account/tokens>
+npm run db:migrate            # runs the Phase 1 migration (idempotent)
+# or write a new one and: node tools/migrate-<name>.mjs
+```
+
+## Deploy (only when user explicitly asks for it)
+
+Don't deploy as part of a normal iteration. Push to GitHub freely (`main` branch); deploying production is a separate, explicit decision.
+
+```bash
+export VERCEL_TOKEN=<token from vercel.com/account/tokens>
 ./node_modules/.bin/vercel deploy --prod --yes
 ```
 
-Vercel auto-detected this as Next.js until I set `framework: null` in `vercel.json` — don't undo that.
+Vercel auto-detected this as Next.js until `framework: null` was set in `vercel.json` — don't undo that.
 
 ## What's done
 - Marketing site: hero, **modes comparison**, **why-not-ChatGPT comparison table**, **ADHD-friendly section**, how-it-works, trust bar
