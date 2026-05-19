@@ -1,0 +1,273 @@
+/* Settings page — styles on top of shared dashboard chrome (account.css).
+   Layout follows the same sidebar+main+rail pattern as /account but the main
+   column is form/preference cards instead of decks. */
+
+.settings-head { margin-bottom: 8px; }
+.settings-h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 3.4vw, 36px);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.settings-sub {
+  font-size: 15px;
+  color: var(--mute);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Card */
+.settings-card {
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: var(--r-2xl);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.settings-card-head h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* Row — text on the left, control on the right */
+.settings-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1.5px solid var(--line-2);
+}
+.settings-row:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.settings-row-text { min-width: 0; }
+.settings-row-text h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.settings-row-text p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--mute);
+  line-height: 1.45;
+  max-width: 56ch;
+}
+
+/* Account row (picture + info) */
+.settings-account-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.settings-account-pic {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid var(--line);
+  flex-shrink: 0;
+}
+.settings-account-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.settings-account-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--ink);
+}
+.settings-account-email { font-size: 14px; color: var(--mute); }
+.settings-account-since { font-size: 12px; color: var(--mute-2); letter-spacing: 0.02em; }
+
+/* Daily goal chips */
+.settings-goal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 280px;
+  max-width: 100%;
+}
+.settings-goal-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink);
+  transition: background .12s, border-color .12s, transform .08s;
+}
+.settings-goal-btn span {
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+@media (hover: hover) {
+  .settings-goal-btn:hover { border-color: var(--purple-ring); }
+}
+.settings-goal-btn:active { transform: translateY(1px); }
+.settings-goal-btn.is-active {
+  border-color: var(--purple);
+  background: var(--purple-soft);
+  color: var(--purple);
+  box-shadow: 0 3px 0 var(--purple-ring);
+}
+.settings-goal-btn.is-active span { color: var(--purple); }
+
+/* Language button */
+.settings-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .12s, background .12s;
+}
+.settings-lang-btn .flag { width: 22px; height: 22px; border-radius: 999px; }
+@media (hover: hover) {
+  .settings-lang-btn:hover { border-color: var(--purple-ring); background: var(--line-2); }
+}
+
+/* Mode switch override — re-use account.css base, narrower for settings */
+.settings-mode-switch .dash-mode-switch-pill { min-width: 220px; }
+
+/* Plan row */
+.settings-plan-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.settings-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--purple-deep);
+  transition: background .12s, transform .08s, box-shadow .12s;
+}
+@media (hover: hover) {
+  .settings-btn-primary:hover { background: #7d4ff0; }
+}
+.settings-btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--purple-deep); }
+
+.settings-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  background: #fff;
+  color: var(--ink);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .12s, border-color .12s, transform .08s;
+}
+@media (hover: hover) {
+  .settings-btn-secondary:hover { background: var(--line-2); border-color: var(--ink-2); }
+}
+.settings-btn-secondary:active { transform: translateY(1px); }
+
+.settings-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  background: #fff;
+  color: #B91C1C;
+  border: 2px solid #FCA5A5;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .12s, border-color .12s, transform .08s;
+}
+@media (hover: hover) {
+  .settings-btn-danger:hover { background: #FEF2F2; border-color: #DC2626; color: #991B1B; }
+}
+.settings-btn-danger:active { transform: translateY(1px); }
+
+/* Toggle switch */
+.settings-toggle { display: inline-flex; align-items: center; cursor: pointer; }
+.settings-toggle input { display: none; }
+.settings-toggle-track {
+  width: 52px;
+  height: 30px;
+  background: var(--line);
+  border-radius: 999px;
+  position: relative;
+  transition: background .18s ease;
+  flex-shrink: 0;
+}
+.settings-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  transition: transform .18s ease;
+}
+.settings-toggle input:checked + .settings-toggle-track { background: var(--purple); }
+.settings-toggle input:checked + .settings-toggle-track .settings-toggle-knob { transform: translateX(22px); }
+
+/* Danger zone subtle marker */
+.settings-danger { border-color: var(--line); }
+
+/* Responsive */
+@media (max-width: 720px) {
+  .settings-card { padding: 18px 18px; }
+  .settings-row { grid-template-columns: 1fr; gap: 12px; }
+  .settings-goal-grid { width: 100%; }
+  .settings-plan-actions { align-items: flex-start; }
+  .settings-account-row { flex-direction: column; align-items: flex-start; text-align: left; }
+}

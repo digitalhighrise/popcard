@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Legal &mdash; Popcard</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png?v=3" />
+  <link rel="apple-touch-icon" href="/images/favicon.png?v=3" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body.legal-page {
+      background: #fff;
+      font-family: var(--font-body);
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .legal-header {
+      padding: 18px 32px;
+      border-bottom: 2px solid var(--line);
+      background: #fff;
+    }
+    .legal-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .legal-brand img { width: 32px; height: 32px; object-fit: contain; }
+    .legal-brand span {
+      font-family: "Outfit", var(--font-display);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    .legal-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 32px 96px;
+      flex: 1;
+    }
+    .legal-toc {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 0 0 48px;
+      padding: 16px;
+      background: var(--purple-soft);
+      border-radius: 14px;
+      border: 1.5px solid var(--purple-ring);
+    }
+    .legal-toc a {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      background: #fff;
+      border: 1.5px solid var(--purple-ring);
+      border-radius: 999px;
+      color: var(--purple);
+      text-decoration: none;
+      transition: background .12s;
+    }
+    .legal-toc a:hover { background: var(--purple); color: #fff; }
+    .legal-section { margin-bottom: 64px; scroll-margin-top: 24px; }
+    .legal-section h1 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.025em;
+      margin: 0 0 8px;
+    }
+    .legal-section .legal-effective {
+      font-size: 13px;
+      color: var(--mute);
+      margin: 0 0 32px;
+      font-weight: 600;
+    }
+    .legal-section h2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      margin: 32px 0 8px;
+      color: var(--ink);
+    }
+    .legal-section p { margin: 0 0 14px; color: var(--ink-2); font-size: 15px; }
+    .legal-section ul { padding-left: 22px; margin: 0 0 14px; color: var(--ink-2); font-size: 15px; }
+    .legal-section li { margin-bottom: 6px; }
+    .legal-section a { color: var(--purple); text-decoration: underline; }
+    .legal-footer {
+      padding: 32px;
+      border-top: 2px solid var(--line);
+      text-align: center;
+      color: var(--mute);
+      font-size: 13px;
+    }
+    .legal-footer a { color: var(--mute); text-decoration: underline; }
+  </style>
+</head>
+<body class="legal-page">
+
+  <header class="legal-header">
+    <a class="legal-brand" href="/">
+      <img src="/images/popcard-icon.png" alt="" />
+      <span>popcard</span>
+    </a>
+  </header>
+
+  <main class="legal-wrap">
+    <nav class="legal-toc" aria-label="Sections">
+      <a href="#terms">Terms</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#cookies">Cookies</a>
+    </nav>
+
+    <!-- ===== TERMS ===== -->
+    <section id="terms" class="legal-section">
+      <h1>Terms of Service</h1>
+      <p class="legal-effective">Effective: 19 May 2026</p>
+
+      <p>Welcome to Popcard. By using popcard.me (the "Service") you agree to these terms. If you don't agree, please don't use the Service.</p>
+
+      <h2>1. The Service</h2>
+      <p>Popcard turns videos, articles, books, podcasts, and notes into study cards using a large language model. You can review your cards, take quizzes, and track your progress.</p>
+
+      <h2>2. Your account</h2>
+      <p>You sign in with Google. You're responsible for the activity that happens on your account. Don't share login details. Tell us right away if you suspect unauthorised use.</p>
+
+      <h2>3. Your content</h2>
+      <p>You keep ownership of the source material you submit (YouTube links, text you paste, etc.) and of the cards we generate from it. You grant us a limited licence to process that content to provide the Service — including sending it to our LLM provider (currently OpenAI).</p>
+      <p>Don't submit content you don't have the right to use. Don't use Popcard to generate cards that violate someone else's copyright, harass or threaten anyone, contain illegal material, or otherwise break the law.</p>
+
+      <h2>4. Acceptable use</h2>
+      <ul>
+        <li>Don't try to break, probe, or reverse-engineer the Service.</li>
+        <li>Don't scrape or automate the Service beyond reasonable personal use.</li>
+        <li>Don't resell access to the Service.</li>
+        <li>Don't impersonate someone else.</li>
+      </ul>
+
+      <h2>5. Paid plans</h2>
+      <p>Paid plans are billed monthly via Stripe. You can cancel any time from your account page; cancellation takes effect at the end of the current billing period. We don't refund partial months.</p>
+
+      <h2>6. Free plan limits</h2>
+      <p>Free accounts can create up to 10 decks per month. We may adjust this limit; if we do, we'll tell you before it affects you.</p>
+
+      <h2>7. Termination</h2>
+      <p>You can delete your account at any time from Settings. We can suspend or terminate accounts that break these Terms.</p>
+
+      <h2>8. Disclaimers</h2>
+      <p>Popcard is provided "as is". LLMs can be wrong; review your cards before relying on them for anything important (exams, professional work, medical questions, etc.). We make no warranty that the Service will be uninterrupted or error-free.</p>
+
+      <h2>9. Liability</h2>
+      <p>To the maximum extent permitted by law, our total liability to you for any claim arising from your use of the Service is limited to what you paid us in the 12 months before the claim.</p>
+
+      <h2>10. Changes</h2>
+      <p>We may update these terms. We'll email you about material changes. Continued use after a change means you accept the new terms.</p>
+
+      <h2>11. Contact</h2>
+      <p>Questions? Email <a href="mailto:hello@popcard.me">hello@popcard.me</a>.</p>
+    </section>
+
+    <!-- ===== PRIVACY ===== -->
+    <section id="privacy" class="legal-section">
+      <h1>Privacy Policy</h1>
+      <p class="legal-effective">Effective: 19 May 2026</p>
+
+      <p>This policy explains what we collect, how we use it, and the choices you have. We try to keep this short and plain.</p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Account info</strong> — name, email, and profile picture from your Google sign-in.</li>
+        <li><strong>Study content</strong> — the YouTube links, articles, and text you submit, plus the cards generated from them.</li>
+        <li><strong>Usage data</strong> — pages visited, buttons clicked, performance metrics. Used to improve the Service. Collected via Vercel Web Analytics and PostHog only if you accept analytics cookies.</li>
+        <li><strong>Payment data</strong> — handled entirely by Stripe. We never see your card number.</li>
+      </ul>
+
+      <h2>How we use it</h2>
+      <ul>
+        <li>To run the Service — generate cards, save decks, show your dashboard.</li>
+        <li>To send you transactional emails (payment confirmations, important notices).</li>
+        <li>To analyse and improve the Service.</li>
+        <li>We do not sell your data. Ever.</li>
+      </ul>
+
+      <h2>Who we share with</h2>
+      <ul>
+        <li><strong>OpenAI</strong> — to generate cards from your submitted content. OpenAI's API terms apply.</li>
+        <li><strong>Supadata</strong> — to transcribe YouTube videos that don't have captions.</li>
+        <li><strong>Vercel</strong> — our hosting provider; sees server logs.</li>
+        <li><strong>Neon</strong> — our database provider; stores your decks.</li>
+        <li><strong>Stripe</strong> — payment processing.</li>
+        <li><strong>PostHog</strong> — product analytics, only with consent.</li>
+      </ul>
+
+      <h2>Your rights</h2>
+      <p>You can:</p>
+      <ul>
+        <li>Access your data — visible in your account, plus contact us for export.</li>
+        <li>Delete your account from Settings, which removes your decks and personal data within 30 days.</li>
+        <li>Withdraw analytics consent at any time by clearing cookies / using the consent modal.</li>
+        <li>Object to processing, request restriction, or file a complaint with your local data-protection authority.</li>
+      </ul>
+
+      <h2>Data retention</h2>
+      <p>Active accounts: data kept while your account exists. Deleted accounts: 30 days then purged from backups.</p>
+
+      <h2>Contact</h2>
+      <p>For privacy questions, email <a href="mailto:hello@popcard.me">hello@popcard.me</a>.</p>
+    </section>
+
+    <!-- ===== COOKIES ===== -->
+    <section id="cookies" class="legal-section">
+      <h1>Cookie Policy</h1>
+      <p class="legal-effective">Effective: 19 May 2026</p>
+
+      <p>Popcard uses cookies and similar storage to run the Service and (with your permission) to understand how you use it.</p>
+
+      <h2>Essential</h2>
+      <p>Required for the Service to work. Set automatically; no consent needed.</p>
+      <ul>
+        <li><strong>Session cookie</strong> — keeps you signed in. HMAC-signed, 30-day expiry.</li>
+        <li><strong>Consent record</strong> — remembers your cookie choice.</li>
+      </ul>
+
+      <h2>Analytics (optional)</h2>
+      <p>Only set if you click <em>Accept</em> on the consent modal. You can change your mind any time by clearing cookies.</p>
+      <ul>
+        <li><strong>Vercel Web Analytics</strong> — page views, performance.</li>
+        <li><strong>PostHog</strong> — anonymised product interaction. We mask form inputs and any element with <code>.ph-mask</code>.</li>
+      </ul>
+
+      <h2>No advertising trackers</h2>
+      <p>We don't use Facebook Pixel, Google Ads, or any third-party advertising cookies.</p>
+
+      <h2>Contact</h2>
+      <p>Cookie questions: <a href="mailto:hello@popcard.me">hello@popcard.me</a>.</p>
+    </section>
+  </main>
+
+  <footer class="legal-footer">
+    &copy; 2026 Popcard. <a href="/">Back to popcard.me</a>
+  </footer>
+
+</body>
+</html>

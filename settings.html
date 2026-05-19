@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>Settings &mdash; Popcard</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png?v=3" />
+  <link rel="apple-touch-icon" href="/images/favicon.png?v=3" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="account.css?v=13" />
+  <link rel="stylesheet" href="settings.css?v=1" />
+</head>
+<body class="dashboard">
+
+  <header class="dash-header">
+    <a class="dash-brand" href="/account">
+      <img class="dash-brand-icon" src="/images/popcard-icon.png" alt="" />
+      <span class="dash-brand-word">popcard</span>
+    </a>
+
+    <div class="dash-stats" data-auth-only>
+      <button type="button" class="dash-stat dash-streak" title="Daily streak" aria-label="Daily streak">
+        <span class="dash-stat-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14a8 8 0 1 0 16 0c0-4.16-2-7.87-6.5-13.33z"/></svg></span>
+        <span class="dash-stat-num" id="dash-streak-num">0</span>
+      </button>
+      <button type="button" class="dash-stat dash-sparks" title="Sparks earned" aria-label="Sparks earned">
+        <span class="dash-stat-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 13.7 8.3 20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7z"/></svg></span>
+        <span class="dash-stat-num" id="dash-sparks-num">0</span>
+      </button>
+    </div>
+
+    <div class="dash-user-wrap" data-auth-only>
+      <button type="button" class="dash-user-chip" id="dash-user-chip">
+        <img class="dash-user-pic" data-auth-picture alt="" referrerpolicy="no-referrer" />
+        <span class="dash-user-name" data-auth-name>Account</span>
+      </button>
+      <div class="dash-user-menu" id="dash-user-menu" hidden role="menu">
+        <a href="/settings" role="menuitem">Settings</a>
+        <a href="/pricing" role="menuitem">Plan &amp; billing</a>
+        <button type="button" role="menuitem" id="sign-out-btn">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dash-layout">
+
+    <aside class="dash-sidebar" aria-label="Primary navigation">
+      <nav class="dash-nav">
+        <a href="/account" class="dash-nav-item">
+          <svg class="dash-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12 12 3l9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+          <span>Home</span>
+        </a>
+        <a href="/account#decks" class="dash-nav-item">
+          <svg class="dash-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="14" height="16" rx="2"/><path d="M21 8v12a1 1 0 0 1-1 1H8"/></svg>
+          <span>Decks</span>
+        </a>
+        <a href="/practice" class="dash-nav-item">
+          <svg class="dash-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10"/><path d="m16 12-4 4-2-2"/></svg>
+          <span>Practice</span>
+        </a>
+        <a href="/quizzes" class="dash-nav-item">
+          <svg class="dash-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11h6"/><path d="M9 15h4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+          <span>Quizzes</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="dash-main">
+
+      <header class="settings-head">
+        <h1 class="settings-h1">Settings</h1>
+        <p class="settings-sub">Manage your account, preferences, and plan.</p>
+      </header>
+
+      <!-- Account section -->
+      <section class="settings-card">
+        <div class="settings-card-head">
+          <h2>Account</h2>
+        </div>
+        <div class="settings-account-row">
+          <img class="settings-account-pic" data-auth-picture alt="" referrerpolicy="no-referrer" />
+          <div class="settings-account-info">
+            <div class="settings-account-name" data-auth-name>Loading&hellip;</div>
+            <div class="settings-account-email" id="settings-email">&nbsp;</div>
+            <div class="settings-account-since" id="settings-since">&nbsp;</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Preferences -->
+      <section class="settings-card">
+        <div class="settings-card-head">
+          <h2>Preferences</h2>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Mode</h3>
+            <p>Quick strips gamification for distraction-free studying. Study turns on streaks, quests, and XP.</p>
+          </div>
+          <div class="dash-mode-switch settings-mode-switch" role="tablist" aria-label="Default mode">
+            <div class="dash-mode-switch-pill">
+              <button type="button" class="dash-mode-switch-btn" data-mode="quick" role="tab" aria-selected="false">
+                <span class="dash-mode-switch-emoji" aria-hidden="true">&#9889;</span>
+                <span>Quick</span>
+              </button>
+              <button type="button" class="dash-mode-switch-btn is-active" data-mode="study" role="tab" aria-selected="true">
+                <span class="dash-mode-switch-emoji" aria-hidden="true">&#127891;</span>
+                <span>Study</span>
+              </button>
+              <span class="dash-mode-switch-indicator" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Daily goal</h3>
+            <p>How many cards do you want to review each day?</p>
+          </div>
+          <div class="settings-goal-grid" id="settings-goal-grid">
+            <button type="button" class="settings-goal-btn" data-goal="5">5 cards<span>Casual</span></button>
+            <button type="button" class="settings-goal-btn is-active" data-goal="10">10 cards<span>Regular</span></button>
+            <button type="button" class="settings-goal-btn" data-goal="20">20 cards<span>Serious</span></button>
+            <button type="button" class="settings-goal-btn" data-goal="30">30 cards<span>Intense</span></button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Language</h3>
+            <p>Cards and the app interface use this language.</p>
+          </div>
+          <div class="settings-lang-wrap">
+            <button type="button" class="settings-lang-btn" id="settings-lang-btn">
+              <span class="flag fi fi-gb" id="settings-lang-flag"></span>
+              <span id="settings-lang-name">English</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Plan -->
+      <section class="settings-card">
+        <div class="settings-card-head">
+          <h2>Plan &amp; billing</h2>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Current plan</h3>
+            <p id="settings-plan-desc">Pop YouTube videos, articles, podcasts and books. 10 pops per month.</p>
+          </div>
+          <div class="settings-plan-actions">
+            <span class="rail-plan-tier" data-auth-tier>free</span>
+            <a href="/pricing" class="settings-btn-primary">View plans &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notifications (stub for now — wire when backend is built) -->
+      <section class="settings-card">
+        <div class="settings-card-head">
+          <h2>Notifications</h2>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Daily reminder</h3>
+            <p>Get a friendly nudge from Pop if you haven't studied today.</p>
+          </div>
+          <label class="settings-toggle">
+            <input type="checkbox" id="settings-reminder" />
+            <span class="settings-toggle-track"><span class="settings-toggle-knob"></span></span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Weekly summary email</h3>
+            <p>A recap of your decks, streak, and Sparks every Sunday.</p>
+          </div>
+          <label class="settings-toggle">
+            <input type="checkbox" id="settings-weekly" />
+            <span class="settings-toggle-track"><span class="settings-toggle-knob"></span></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Danger zone -->
+      <section class="settings-card settings-danger">
+        <div class="settings-card-head">
+          <h2>Account actions</h2>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Sign out</h3>
+            <p>Sign out on this device. Your decks stay safe.</p>
+          </div>
+          <button type="button" class="settings-btn-secondary" id="settings-signout-btn">Sign out</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <h3>Delete account</h3>
+            <p>Permanently remove your account and all decks. This can't be undone.</p>
+          </div>
+          <button type="button" class="settings-btn-danger" id="settings-delete-btn">Delete account</button>
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="dash-rail" aria-label="Settings rail">
+      <div class="rail-card rail-mascot">
+        <img class="rail-mascot-img" src="/images/popcard-mascot.png" alt="" />
+        <div class="rail-mascot-bubble">
+          Tweak anything you like &mdash; changes save automatically.
+        </div>
+      </div>
+      <div class="rail-card">
+        <div class="rail-card-head"><h3>Need help?</h3></div>
+        <p style="font-size:13px;color:var(--mute);line-height:1.45;margin:0 0 10px;">Stuck on something or have a feature request?</p>
+        <a href="mailto:hello@popcard.me" class="rail-plan-cta">Email support</a>
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="analytics.js"></script>
+  <script src="cookies.js"></script>
+  <script src="auth.js"></script>
+  <script src="lang-picker.js"></script>
+  <script src="i18n.js"></script>
+  <script src="settings.js?v=1"></script>
+</body>
+</html>

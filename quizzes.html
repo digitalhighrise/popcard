@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="account.css?v=13" />
-  <link rel="stylesheet" href="quizzes.css?v=5" />
+  <link rel="stylesheet" href="quizzes.css?v=7" />
 </head>
 <body class="dashboard is-study-mode">
 
@@ -40,6 +40,7 @@
       </button>
       <div class="dash-user-menu" id="dash-user-menu" hidden role="menu">
         <a href="/account" role="menuitem">Dashboard</a>
+        <a href="/settings" role="menuitem">Settings</a>
         <a href="/pricing" role="menuitem">Plan &amp; billing</a>
         <button type="button" role="menuitem" id="sign-out-btn">Sign out</button>
       </div>
@@ -86,6 +87,24 @@
           <!-- decks rendered here -->
         </div>
 
+        <!-- Floating multi-select action bar — appears when 1+ deck is
+             selected via card body click. Sticky at the bottom of the
+             viewport, slides up from below. -->
+        <div class="quiz-multi-bar" id="quiz-multi-bar" hidden>
+          <div class="quiz-multi-info">
+            <span id="quiz-multi-count">0</span> deck<span id="quiz-multi-plural">s</span>
+            <span class="quiz-multi-dot" aria-hidden="true">&middot;</span>
+            <span id="quiz-multi-cards">0</span> cards
+          </div>
+          <button type="button" class="quiz-multi-clear" id="quiz-multi-clear" aria-label="Clear selection">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+          <button type="button" class="quiz-multi-cta" id="quiz-multi-cta">
+            <span>Quiz Mode</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+
         <div class="quiz-loading" id="quiz-loading">Loading your decks&hellip;</div>
         <div class="quiz-empty" id="quiz-empty" hidden>
           <img src="/images/popcard-mascot.png" alt="" class="quiz-empty-mascot" />
@@ -93,6 +112,63 @@
           <p>Pop a deck on your dashboard first &mdash; you need at least 4 cards in a deck to take a quiz.</p>
           <a href="/account" class="quiz-empty-cta">Go to dashboard</a>
         </div>
+      </section>
+
+      <!-- ===== Round-length picker (shown after deck selection) =============
+           Full-screen overlay matching the quiz session chrome. User picks
+           Quick / Standard / Long and the quiz launches with that many
+           questions. Counts cap at total available cards. -->
+      <section class="quiz-rounds" id="quiz-rounds" hidden>
+        <header class="qz-head">
+          <button type="button" class="qz-quit" id="quiz-rounds-back" aria-label="Back to deck picker">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          </button>
+          <div class="qz-progress" aria-hidden="true"><div class="qz-progress-fill" style="width:0%"></div></div>
+          <span class="quiz-rounds-decks" id="quiz-rounds-decks">1 deck</span>
+        </header>
+
+        <main class="qz-main">
+          <div class="quiz-rounds-stage">
+            <img class="quiz-rounds-mascot" src="/images/popcard-mascot.png" alt="" />
+          </div>
+          <div class="qz-bubble">
+            <span class="qz-tag">Setup</span>
+            <h2 class="qz-question">How long do you want to play?</h2>
+            <p class="quiz-rounds-sub" id="quiz-rounds-sub">Distractors will be pulled from your whole card pool.</p>
+          </div>
+          <div class="quiz-rounds-grid">
+            <button type="button" class="quiz-round-card" data-rounds="quick">
+              <span class="quiz-round-emoji" aria-hidden="true">&#9889;</span>
+              <span class="quiz-round-body">
+                <span class="quiz-round-label">Quick</span>
+                <span class="quiz-round-meta"><strong class="quiz-round-count" data-cap="5">5</strong> questions &middot; ~1 min</span>
+              </span>
+              <span class="quiz-round-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </button>
+            <button type="button" class="quiz-round-card" data-rounds="standard">
+              <span class="quiz-round-emoji" aria-hidden="true">&#127919;</span>
+              <span class="quiz-round-body">
+                <span class="quiz-round-label">Standard</span>
+                <span class="quiz-round-meta"><strong class="quiz-round-count" data-cap="10">10</strong> questions &middot; ~3 min</span>
+              </span>
+              <span class="quiz-round-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </button>
+            <button type="button" class="quiz-round-card" data-rounds="long">
+              <span class="quiz-round-emoji" aria-hidden="true">&#127942;</span>
+              <span class="quiz-round-body">
+                <span class="quiz-round-label">Long</span>
+                <span class="quiz-round-meta"><strong class="quiz-round-count" data-cap="20">20</strong> questions &middot; ~5 min</span>
+              </span>
+              <span class="quiz-round-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </button>
+          </div>
+        </main>
       </section>
 
       <!-- ===== Quiz session (full-screen overlay, Duolingo-style) ============
@@ -114,12 +190,20 @@
           <div class="qz-progress" aria-hidden="true">
             <div class="qz-progress-fill" id="quiz-progress-fill"></div>
           </div>
-          <div class="qz-score" title="Score so far">
-            <span class="qz-score-icon" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <!-- Hearts / lives. JS paints fill state per heart. -->
+          <div class="qz-hearts" id="quiz-hearts" title="Lives remaining" aria-label="Lives remaining">
+            <span class="qz-heart" data-heart="1" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.35-7-11a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 6.65-7 11-7 11z"/></svg>
             </span>
-            <span id="quiz-score-live">0</span>
+            <span class="qz-heart" data-heart="2" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.35-7-11a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 6.65-7 11-7 11z"/></svg>
+            </span>
+            <span class="qz-heart" data-heart="3" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.35-7-11a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 6.65-7 11-7 11z"/></svg>
+            </span>
           </div>
+          <!-- Hidden score counter kept for any analytics references — not displayed -->
+          <span id="quiz-score-live" hidden>0</span>
         </header>
 
         <main class="qz-main">
@@ -182,6 +266,8 @@
                 <h3 class="qz-feedback-h" id="quiz-feedback-text">Correct!</h3>
                 <p class="qz-feedback-detail" id="quiz-feedback-detail" hidden></p>
               </div>
+              <!-- XP gain badge on correct, heart-loss badge on wrong. -->
+              <span class="qz-xp-badge" id="quiz-xp-badge" hidden>+3 XP</span>
             </div>
             <!-- One CTA button: CHECK (when option picked) → CONTINUE (after grade) -->
             <button type="button" class="qz-cta" id="quiz-cta" data-mode="check" disabled>CHECK</button>
@@ -270,6 +356,6 @@
   <script src="auth.js"></script>
   <script src="lang-picker.js"></script>
   <script src="i18n.js"></script>
-  <script src="quizzes.js?v=9"></script>
+  <script src="quizzes.js?v=11"></script>
 </body>
 </html>
