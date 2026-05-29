@@ -15,9 +15,9 @@
 // maps cleanly: 'hard' in practice = 'hard' here. We accept 'again' too for
 // when we add a "I forgot" button (Sprint 3 lesson screen).
 
-import './_lib/env.js';
-import { sql } from './_lib/db.js';
-import { getSession } from './_lib/session.js';
+import '../env.js';
+import { sql } from '../db.js';
+import { getSession } from '../session.js';
 
 const RATINGS = new Set(['again', 'hard', 'good', 'easy']);
 const MIN_EASE = 1.3;

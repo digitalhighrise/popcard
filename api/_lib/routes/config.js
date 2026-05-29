@@ -8,7 +8,7 @@
 // Set these in .env.local (and in Vercel for production):
 //   POSTHOG_KEY   = phc_xxx                  (your project API key)
 //   POSTHOG_HOST  = https://us.i.posthog.com (or https://eu.i.posthog.com)
-import './_lib/env.js';
+import '../env.js';
 
 export default function handler(req, res) {
   // Cache for a minute so we don't hammer the function on every page nav.

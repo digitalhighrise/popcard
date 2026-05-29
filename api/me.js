@@ -6,8 +6,16 @@
 // sensible defaults. The endpoint never errors over a missing column.
 import { sql, getUser } from './_lib/db.js';
 import { getSession } from './_lib/session.js';
+// Consolidated routes (Hobby 12-function limit): /api/config and
+// /api/onboarding-prefs are rewritten here with ?_r=config | ?_r=prefs.
+import configRoute from './_lib/routes/config.js';
+import prefsRoute from './_lib/routes/onboarding-prefs.js';
 
 export default async function handler(req, res) {
+  const r = req.query && req.query._r;
+  if (r === 'config') return configRoute(req, res);
+  if (r === 'prefs') return prefsRoute(req, res);
+
   const session = getSession(req);
   if (!session) return res.status(401).json({ user: null });
 

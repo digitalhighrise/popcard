@@ -6,9 +6,9 @@
 //
 // All ownership-scoped via the session uid.
 
-import './_lib/env.js';
-import { getSession } from './_lib/session.js';
-import { listNotifications, markAllRead, markOneRead } from './_lib/notifications.js';
+import '../env.js';
+import { getSession } from '../session.js';
+import { listNotifications, markAllRead, markOneRead } from '../notifications.js';
 
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 

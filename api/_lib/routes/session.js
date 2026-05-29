@@ -13,11 +13,11 @@
 // Streak and daily_activity are updated atomically alongside the session row
 // so the dashboard reflects truth on the next /api/me hit.
 
-import './_lib/env.js';
-import { sql, getUser } from './_lib/db.js';
-import { getSession } from './_lib/session.js';
-import { recordSession, SESSION_SOURCES } from './_lib/sessions.js';
-import { maybeCreateStreakMilestone } from './_lib/notifications.js';
+import '../env.js';
+import { sql, getUser } from '../db.js';
+import { getSession } from '../session.js';
+import { recordSession, SESSION_SOURCES } from '../sessions.js';
+import { maybeCreateStreakMilestone } from '../notifications.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

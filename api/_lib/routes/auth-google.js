@@ -1,7 +1,7 @@
-import '../_lib/env.js';
+import '../env.js';
 import { OAuth2Client } from 'google-auth-library';
-import { upsertUser } from '../_lib/db.js';
-import { createSessionCookie } from '../_lib/session.js';
+import { upsertUser } from '../db.js';
+import { createSessionCookie } from '../session.js';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 

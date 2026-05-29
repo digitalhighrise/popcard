@@ -1,8 +1,13 @@
 import './_lib/env.js';
 import { sql } from './_lib/db.js';
 import { getSession } from './_lib/session.js';
+// Consolidated route (Hobby 12-function limit): /api/deck (single deck
+// GET/PATCH/DELETE) is rewritten here with ?_r=deck.
+import deckRoute from './_lib/routes/deck.js';
 
 export default async function handler(req, res) {
+  if (req.query && req.query._r === 'deck') return deckRoute(req, res);
+
   const session = getSession(req);
   if (!session) return res.status(401).json({ error: 'Not signed in' });
 

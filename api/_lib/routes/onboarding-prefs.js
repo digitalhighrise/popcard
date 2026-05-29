@@ -6,9 +6,9 @@
 // Defensive: if the users table doesn't have these columns yet (migration
 // not run), the endpoint still 200s — it just won't persist. The front-end
 // keeps a localStorage copy as a fallback, so nothing is lost.
-import './_lib/env.js';
-import { sql } from './_lib/db.js';
-import { getSession } from './_lib/session.js';
+import '../env.js';
+import { sql } from '../db.js';
+import { getSession } from '../session.js';
 
 const ALLOWED_MODES = new Set(['quick', 'study']);
 const ALLOWED_LANGS = new Set([

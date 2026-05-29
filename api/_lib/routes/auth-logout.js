@@ -1,4 +1,4 @@
-import { clearSessionCookie } from '../_lib/session.js';
+import { clearSessionCookie } from '../session.js';
 
 export default function handler(req, res) {
   if (req.method !== 'POST') {

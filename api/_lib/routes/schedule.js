@@ -14,9 +14,9 @@
 // Ownership is enforced on every read/write. Source data is validated against
 // kind to stop bad shapes (deck without an id, text without text, etc).
 
-import './_lib/env.js';
-import { sql } from './_lib/db.js';
-import { getSession } from './_lib/session.js';
+import '../env.js';
+import { sql } from '../db.js';
+import { getSession } from '../session.js';
 
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 const SOURCE_KINDS = new Set(['deck', 'text', 'url']);

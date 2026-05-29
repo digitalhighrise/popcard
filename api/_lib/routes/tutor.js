@@ -16,11 +16,11 @@
 // UX, enforced server-side via a cheap query against a tutor_log. To avoid a
 // new table for v1, we gate by tier only: free = limited per request batch.
 
-import './_lib/env.js';
-import { getSession } from './_lib/session.js';
-import { getUser } from './_lib/db.js';
-import { getDeckWithCards } from './_lib/decks.js';
-import { tutorReply } from './_lib/llm.js';
+import '../env.js';
+import { getSession } from '../session.js';
+import { getUser } from '../db.js';
+import { getDeckWithCards } from '../decks.js';
+import { tutorReply } from '../llm.js';
 
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 

@@ -8,9 +8,9 @@
 // We route by ?action= query param so this stays one Vercel function instead
 // of three. Keeps the function count low (matters for cold starts + limits).
 
-import './_lib/env.js';
-import { getSession } from './_lib/session.js';
-import { vapidPublicKey, saveSubscription, removeSubscription, sendToUser } from './_lib/push.js';
+import '../env.js';
+import { getSession } from '../session.js';
+import { vapidPublicKey, saveSubscription, removeSubscription, sendToUser } from '../push.js';
 
 export default async function handler(req, res) {
   const action = req.query?.action;

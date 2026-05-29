@@ -11,12 +11,12 @@
 //
 // GET /api/review-deck?deckId=…  → just the current status (no LLM call).
 
-import './_lib/env.js';
-import { getSession } from './_lib/session.js';
-import { sql } from './_lib/db.js';
-import { getStudyCardsForReview, saveDeckReview } from './_lib/decks.js';
-import { reviewDeckCards, groupCardsIntoLessons } from './_lib/llm.js';
-import { regroupDeckLessons } from './_lib/lessons.js';
+import '../env.js';
+import { getSession } from '../session.js';
+import { sql } from '../db.js';
+import { getStudyCardsForReview, saveDeckReview } from '../decks.js';
+import { reviewDeckCards, groupCardsIntoLessons } from '../llm.js';
+import { regroupDeckLessons } from '../lessons.js';
 
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 

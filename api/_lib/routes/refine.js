@@ -1,5 +1,5 @@
-import { getSession } from './_lib/session.js';
-import { refineCard } from './_lib/llm.js';
+import { getSession } from '../session.js';
+import { refineCard } from '../llm.js';
 
 const ALLOWED_ACTIONS = new Set(['simplify', 'eli15', 'why']);
 

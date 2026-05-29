@@ -6,7 +6,21 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/deck/:id", "destination": "/deck?id=:id" }
+    { "source": "/deck/:id", "destination": "/deck?id=:id" },
+    { "source": "/api/session", "destination": "/api/study?_r=session" },
+    { "source": "/api/review-deck", "destination": "/api/study?_r=review-deck" },
+    { "source": "/api/review", "destination": "/api/study?_r=review" },
+    { "source": "/api/lessons", "destination": "/api/study?_r=lessons" },
+    { "source": "/api/notifications", "destination": "/api/engage?_r=notifications" },
+    { "source": "/api/push", "destination": "/api/engage?_r=push" },
+    { "source": "/api/schedule", "destination": "/api/engage?_r=schedule" },
+    { "source": "/api/auth/google", "destination": "/api/authgw?_r=google" },
+    { "source": "/api/auth/logout", "destination": "/api/authgw?_r=logout" },
+    { "source": "/api/refine", "destination": "/api/ai?_r=refine" },
+    { "source": "/api/tutor", "destination": "/api/ai?_r=tutor" },
+    { "source": "/api/onboarding-prefs", "destination": "/api/me?_r=prefs" },
+    { "source": "/api/config", "destination": "/api/me?_r=config" },
+    { "source": "/api/deck", "destination": "/api/decks?_r=deck" }
   ],
   "crons": [
     { "path": "/api/cron/notify", "schedule": "0 18 * * *" }

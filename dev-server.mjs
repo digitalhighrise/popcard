@@ -92,8 +92,33 @@ function augmentRes(res) {
   return res;
 }
 
+// ---- vercel.json rewrites (so local dev matches prod after consolidation) --
+// Exact-match /api/* rewrites map a public path to a consolidated function +
+// a ?_r= selector, e.g. /api/session -> /api/study?_r=session. We apply them
+// here so the in-process dev server resolves the same handler Vercel would.
+let API_REWRITES = null;
+function loadApiRewrites() {
+  if (API_REWRITES) return API_REWRITES;
+  API_REWRITES = {};
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+    for (const rw of cfg.rewrites || []) {
+      if (!rw.source.startsWith('/api/') || rw.source.includes(':')) continue;
+      const [destPath, destQs] = rw.destination.split('?');
+      API_REWRITES[rw.source] = { path: destPath, query: destQs || '' };
+    }
+  } catch {}
+  return API_REWRITES;
+}
+
 // ---- /api/* → run the matching handler file in-process -------------------
 async function handleApi(req, res, urlObj) {
+  // Apply an exact-match API rewrite if one exists for this path.
+  const rw = loadApiRewrites()[urlObj.pathname];
+  if (rw) {
+    urlObj.pathname = rw.path;
+    if (rw.query) new URLSearchParams(rw.query).forEach((v, k) => urlObj.searchParams.set(k, v));
+  }
   let rel = urlObj.pathname.replace(/^\/+/, '').replace(/\/+$/, '');   // "api/me"
   // Don't expose helper/disabled dirs as routes.
   if (rel.includes('/_lib/') || rel.includes('/_disabled/')) {

@@ -1,7 +1,7 @@
-import './_lib/env.js';
-import { sql } from './_lib/db.js';
-import { getSession } from './_lib/session.js';
-import { getDeckWithCards } from './_lib/decks.js';
+import '../env.js';
+import { sql } from '../db.js';
+import { getSession } from '../session.js';
+import { getDeckWithCards } from '../decks.js';
 
 export default async function handler(req, res) {
   const session = getSession(req);

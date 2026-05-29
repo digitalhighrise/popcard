@@ -7,15 +7,15 @@
 //
 // All ownership-scoped via the session uid + the deck join inside the lib.
 
-import './_lib/env.js';
-import { getSession } from './_lib/session.js';
+import '../env.js';
+import { getSession } from '../session.js';
 import {
   listLessonsWithProgress,
   getLessonCards,
   recordLessonResult,
   generateLessonsForDeck,
-} from './_lib/lessons.js';
-import { createNotification } from './_lib/notifications.js';
+} from '../lessons.js';
+import { createNotification } from '../notifications.js';
 
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
